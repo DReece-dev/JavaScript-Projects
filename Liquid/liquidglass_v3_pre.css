@@ -1,0 +1,390 @@
+/* liquidglass.v7.5 - Performance Optimized Edition */
+/* This version prioritizes performance while maintaining visual quality */
+
+/* --- Core Framework Styles --- */
+:root {
+    /* Variables */
+    --lg-border-radius: 30px;
+    --lg-padding: 24px;
+    --lg-transition-speed: 0.3s; /* Reduced from 0.6s */
+    --lg-transition-spring: cubic-bezier(
+        0.2,
+        0.8,
+        0.4,
+        1
+    ); /* Simplified easing */
+
+    /* Theming Colors */
+    --lg-accent-color: #007aff;
+    --lg-alert-color: #ff3b30;
+    --lg-success-color: #34c759;
+
+    /* Light Theme */
+    --lg-background-color-solid: #f4f4f9;
+    --lg-text-color: #1d1d1f;
+    --lg-text-color-secondary: rgba(60, 60, 67, 0.7);
+    --lg-glint-color: rgba(255, 255, 255, 0.4); /* Reduced opacity */
+    --lg-glint-size: 300px; /* Reduced size */
+    --lg-tint-rgb: 255, 255, 255;
+}
+
+:root.lg-dark-theme {
+    /* Dark Theme */
+    --lg-background-color-solid: #111113;
+    --lg-text-color: rgba(255, 255, 255, 0.95);
+    --lg-text-color-secondary: rgba(235, 235, 245, 0.6);
+    --lg-glint-color: rgba(255, 255, 255, 0.15); /* Reduced opacity */
+    --lg-glint-size: 350px; /* Reduced size */
+    --lg-tint-rgb: 50, 50, 55;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--lg-background-color-solid);
+    background-image: url("https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2670&auto=format&fit=crop");
+    background-size: cover;
+    background-attachment: fixed;
+    transition: background-color var(--lg-transition-speed) ease;
+    padding: 40px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Performance-First Material - Simplified approach */
+.lg-material {
+    /* SIMPLIFIED: Use single backdrop-filter with moderate blur */
+    backdrop-filter: blur(12px); /* Reduced from 24px */
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Static background instead of gradient for better performance */
+    background: rgba(255, 255, 255, 0.2);
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--lg-border-radius);
+
+    /* SIMPLIFIED: Reduced box-shadow complexity */
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 8px 32px rgba(0, 0, 0, 0.1);
+
+    /* REMOVED: will-change to prevent unnecessary GPU layers */
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    color: var(--lg-text-color);
+}
+
+.lg-dark-theme .lg-material {
+    background: rgba(30, 30, 35, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* PERFORMANCE OPTIMIZATION: Only add texture on hover/focus to reduce baseline load */
+.lg-material:hover::after,
+.lg-material:focus-visible::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNSIgbnVtT2N0YXZlcz0iMiIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjAzIi8+PC9zdmc+");
+    pointer-events: none;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.lg-material:hover::after,
+.lg-material:focus-visible::after {
+    opacity: 1;
+}
+
+/* SIMPLIFIED: Text elements */
+.lg-material p,
+.lg-material h1,
+.lg-material h2,
+.lg-material h3,
+.lg-material h4,
+.lg-material h5,
+.lg-material h6 {
+    position: relative;
+    color: inherit;
+}
+
+/* PERFORMANCE: Conditional glint effect - only on devices that can handle it */
+@media (min-width: 768px) and (pointer: fine) {
+    .lg-material::before {
+        content: "";
+        position: absolute;
+        top: var(--lg-pointer-y, 50%);
+        left: var(--lg-pointer-x, 50%);
+        width: var(--lg-glint-size);
+        height: var(--lg-glint-size);
+        background: radial-gradient(
+            circle,
+            var(--lg-glint-color) 0%,
+            transparent 55%
+        );
+        opacity: var(--lg-pointer-active, 0);
+        transform: translate(-50%, -50%);
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 1;
+        border-radius: 50%;
+    }
+}
+
+/* Nested Materials - Further simplified */
+.lg-material .lg-material {
+    --lg-border-radius: 22px;
+    backdrop-filter: none; /* Remove nested backdrop-filter for performance */
+    background: rgba(var(--lg-tint-rgb), 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.lg-dark-theme .lg-material .lg-material {
+    background: rgba(var(--lg-tint-rgb), 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- Optimized Effects & States --- */
+/* CONDITIONAL: Only load expensive effects when needed */
+.lg-lensing {
+    filter: url(#lg-global-lensing-filter);
+}
+
+/* SIMPLIFIED: Ripple with better performance */
+.lg-ripple-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    /* Removed filter for better performance */
+}
+
+.lg-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: lg-ripple-anim 0.5s ease-out; /* Faster animation */
+    will-change: transform; /* Only transform, not opacity */
+}
+
+@keyframes lg-ripple-anim {
+    to {
+        transform: scale(2.5); /* Reduced scale */
+        opacity: 0;
+    }
+}
+
+.lg-readable-boost {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Reduced blur */
+}
+
+.lg-dark-theme .lg-readable-boost {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Reduced blur */
+}
+
+/* --- Optimized Interactivity --- */
+.lg-material:focus-visible {
+    outline: none;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 0 0 3px var(--lg-background-color-solid),
+        0 0 0 5px var(--lg-accent-color);
+}
+
+.lg-dark-theme .lg-material:focus-visible {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 0 3px var(--lg-background-color-solid),
+        0 0 0 5px var(--lg-accent-color);
+}
+
+.lg-button {
+    padding: 14px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s ease; /* Faster transition */
+    position: relative;
+    font-size: inherit;
+    font-family: inherit;
+    background: transparent;
+    color: inherit;
+}
+
+.lg-button:hover {
+    transform: translateY(-2px); /* Reduced movement */
+}
+
+.lg-button:active {
+    transform: scale(0.98); /* Less dramatic scale */
+    transition-duration: 0.05s;
+}
+
+/* Simplified pulse animations */
+.lg-alert,
+.lg-success {
+    animation: lg-pulse-border 3s infinite ease-in-out; /* Slower pulse */
+}
+
+.lg-alert {
+    --lg-pulse-color: var(--lg-alert-color);
+}
+
+.lg-success {
+    --lg-pulse-color: var(--lg-success-color);
+}
+
+@keyframes lg-pulse-border {
+    0%,
+    100% {
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        border-color: var(--lg-pulse-color);
+    }
+}
+
+/* Performance-first responsive design */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .lg-material::before,
+    .lg-material::after,
+    .lg-ripple {
+        display: none !important;
+    }
+
+    .lg-lensing {
+        filter: none !important;
+    }
+}
+
+/* Disable expensive effects on low-end devices */
+@media (max-width: 768px), (pointer: coarse) {
+    .lg-material {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(var(--lg-tint-rgb), 0.4);
+        border: 1px solid rgba(var(--lg-tint-rgb), 0.3);
+    }
+
+    .lg-dark-theme .lg-material {
+        background: rgba(30, 30, 35, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .lg-material::before,
+    .lg-material::after {
+        display: none;
+    }
+}
+
+/* High contrast mode with better performance */
+@media (prefers-contrast: high) {
+    .lg-material {
+        border: 2px solid var(--lg-text-color);
+        background: var(--lg-background-color-solid);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+
+/* --- Demo Styles - Optimized --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 80px auto 0;
+}
+
+.header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--lg-text-color);
+    transition: color var(--lg-transition-speed) ease;
+}
+
+.header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin: 0;
+}
+
+.header p {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    opacity: 0.8;
+    margin: 1rem 0;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.lg-panel {
+    padding: var(--lg-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 320px;
+}
+
+.gallery-item {
+    text-align: center;
+}
+
+.gallery-item h2 {
+    margin: 0 0 10px 0;
+}
+
+.gallery-item p {
+    font-size: 1rem;
+    opacity: 0.7;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.gallery-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Simplified shadow */
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.nested-panel {
+    padding: var(--lg-padding);
+    text-align: center;
+    margin-top: 20px;
+}

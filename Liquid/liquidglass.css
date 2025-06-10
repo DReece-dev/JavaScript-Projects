@@ -1,0 +1,251 @@
+/* liquidglass.v7.css */
+/* v7.0 Aesthetic Core Edition: The definitive realization of the vision. */
+
+/* --- Core Framework Styles --- */
+
+:root {
+    --lg-border-radius: 30px; /* Softer, more organic rounding */
+    --lg-padding: 24px;
+    --lg-transition-speed: 0.6s;
+    --lg-transition-spring: cubic-bezier(
+        0.2,
+        1.1,
+        0.4,
+        1
+    ); /* A fluid, liquid-like spring */
+
+    /* Light Theme: Bright, ethereal, and highly translucent */
+    --lg-background-color: rgba(255, 255, 255, 0.15); /* More transparent */
+    --lg-background-color-solid: #f4f4f9;
+    --lg-border-color: rgba(255, 255, 255, 0.25);
+    --lg-text-color: #1d1d1f;
+    --lg-text-color-secondary: rgba(60, 60, 67, 0.7);
+    --lg-glint-color: rgba(255, 255, 255, 0.9);
+    --lg-glint-size: 500px;
+    --lg-blur-amount: 24px;
+    --lg-saturation-amount: 130%;
+}
+
+/* Dark Theme: Deep, dimensional, and reflective */
+:root.lg-dark-theme {
+    --lg-background-color: rgba(30, 30, 35, 0.2);
+    --lg-background-color-solid: #111113;
+    --lg-border-color: rgba(255, 255, 255, 0.1);
+    --lg-text-color: rgba(255, 255, 255, 0.95);
+    --lg-text-color-secondary: rgba(235, 235, 245, 0.6);
+    --lg-glint-color: rgba(255, 255, 255, 0.2);
+    --lg-glint-size: 600px;
+    --lg-blur-amount: 32px;
+    --lg-saturation-amount: 180%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+    background-color: var(--lg-background-color-solid);
+    background-image: url("https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2670&auto=format&fit=crop");
+    background-size: cover;
+    background-attachment: fixed;
+    transition: background-color var(--lg-transition-speed) ease;
+}
+
+/* The Meta-Material */
+.lg-material {
+    background-color: var(--lg-background-color);
+    backdrop-filter: blur(var(--lg-blur-amount))
+        saturate(var(--lg-saturation-amount)) brightness(1.05);
+    -webkit-backdrop-filter: blur(var(--lg-blur-amount))
+        saturate(var(--lg-saturation-amount)) brightness(1.05);
+    border: 1px solid var(--lg-border-color);
+    border-radius: var(--lg-border-radius);
+    /* Shadow is minimal. Lensing and layering create depth. */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+    transition:
+        transform 0.2s ease-out,
+        background-color var(--lg-transition-speed) ease,
+        border-color var(--lg-transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+    transform-style: preserve-3d;
+    color: var(--lg-text-color);
+}
+.lg-material p,
+.lg-material h2,
+.lg-material h3 {
+    z-index: 2;
+    position: relative;
+    color: inherit;
+    transition: color var(--lg-transition-speed) ease;
+}
+
+/* The Definitive Concentric Design */
+.lg-material .lg-material {
+    --lg-border-radius: 22px; /* Tighter, nested radius */
+    --lg-blur-amount: 10px; /* Sharper, feels closer */
+    --lg-saturation-amount: 110%;
+    /* Uses context-aware color or a brighter/darker default */
+    background-color: rgba(var(--lg-tint-rgb, 255, 255, 255), 0.3);
+    /* The only shadow is a soft inner highlight, creating a 'beveled' look */
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+.lg-dark-theme .lg-material .lg-material {
+    background-color: rgba(var(--lg-tint-rgb, 50, 50, 55), 0.35);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+/* The pure, soft highlight that shifts with your movements */
+.lg-material::before {
+    content: "";
+    position: absolute;
+    top: var(--lg-pointer-y, 50%);
+    left: var(--lg-pointer-x, 50%);
+    width: var(--lg-glint-size);
+    height: var(--lg-glint-size);
+    background: radial-gradient(
+        circle,
+        var(--lg-glint-color) 0%,
+        transparent 55%
+    );
+    opacity: var(--lg-pointer-active, 0);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Lensing is the primary method of visual separation */
+.lg-lensing {
+    filter: url(#lg-global-lensing-filter);
+}
+.lg-ripple-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    filter: url(#lg-ripple-filter);
+    z-index: 0;
+}
+.lg-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    transform: scale(0);
+    animation: lg-ripple-anim 0.7s ease-out;
+    will-change: transform, opacity;
+}
+@keyframes lg-ripple-anim {
+    from {
+        transform: scale(0);
+        opacity: 1;
+    }
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/* The most subtle, non-intrusive readability boost */
+.lg-readable-boost {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.lg-dark-theme .lg-readable-boost {
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Fluidity and Organic Motion in buttons */
+.lg-button {
+    padding: 14px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s var(--lg-transition-spring);
+    z-index: 2;
+}
+.lg-button:active {
+    transform: scale(0.92);
+    transition-duration: 0.1s;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .lg-material,
+    .lg-button {
+        transition:
+            background-color 0.2s ease,
+            opacity 0.2s ease;
+        transform: none !important;
+    }
+    .lg-material::before,
+    .lg-ripple,
+    .lg-lensing {
+        display: none !important;
+        filter: none !important;
+    }
+}
+
+/* --- Demo-specific Styles --- */
+
+body {
+    padding: 40px;
+    box-sizing: border-box;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 80px auto 0;
+}
+.header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--lg-text-color);
+    transition: color 0.6s ease;
+}
+.header h1 {
+    font-size: 3.5rem;
+}
+.header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+.lg-panel {
+    padding: var(--lg-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 320px;
+}
+.gallery-item {
+    text-align: center;
+}
+.gallery-item h2 {
+    margin-bottom: 10px;
+}
+.gallery-item p {
+    font-size: 1rem;
+    opacity: 0.7;
+    max-width: 80%;
+    margin: 0 auto;
+}
+.gallery-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.nested-panel {
+    padding: var(--lg-padding);
+    text-align: center;
+    margin-top: 20px;
+}

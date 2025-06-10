@@ -1,0 +1,381 @@
+/* liquidglass.v7.5 - Final Polish Edition - FIXED */
+/* This version fixes the faint border artifact on grid elements by refining */
+/* the box-shadow system for a visually perfect result. It is designed */
+/* to work with the accompanying liquidglass.v7.js file. */
+
+/* --- Core Framework Styles --- */
+:root {
+    /* Variables */
+    --lg-border-radius: 30px;
+    --lg-padding: 24px;
+    --lg-transition-speed: 0.6s;
+    --lg-transition-spring: cubic-bezier(0.2, 1.1, 0.4, 1);
+
+    /* Theming Colors */
+    --lg-accent-color: #007aff;
+    --lg-alert-color: #ff3b30;
+    --lg-success-color: #34c759;
+
+    /* Light Theme */
+    --lg-background-color-solid: #f4f4f9;
+    --lg-text-color: #1d1d1f;
+    --lg-text-color-secondary: rgba(60, 60, 67, 0.7);
+    --lg-glint-color: rgba(255, 255, 255, 0.9);
+    --lg-glint-size: 500px;
+
+    /* RGB values for nested materials */
+    --lg-tint-rgb: 255, 255, 255;
+}
+
+:root.lg-dark-theme {
+    /* Dark Theme */
+    --lg-background-color-solid: #111113;
+    --lg-text-color: rgba(255, 255, 255, 0.95);
+    --lg-text-color-secondary: rgba(235, 235, 245, 0.6);
+    --lg-glint-color: rgba(255, 255, 255, 0.2);
+    --lg-glint-size: 600px;
+
+    /* RGB values for nested materials in dark theme */
+    --lg-tint-rgb: 50, 50, 55;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background-color: var(--lg-background-color-solid);
+    background-image: url("https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2670&auto=format&fit=crop");
+    background-size: cover;
+    background-attachment: fixed;
+    transition: background-color var(--lg-transition-speed) ease;
+    padding: 40px;
+    box-sizing: border-box;
+    margin: 0; /* Reset default margin */
+}
+
+/* The Meta-Material */
+.lg-material {
+    backdrop-filter: blur(24px) saturate(180%) brightness(105%) contrast(90%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(105%)
+        contrast(90%);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.25),
+        rgba(255, 255, 255, 0.15)
+    );
+    border: 1.5px solid transparent; /* Fixed: Use transparent instead of border-image for better compatibility */
+    background-clip: padding-box; /* Ensures background doesn't show through border */
+    border-radius: var(--lg-border-radius);
+    /* FIX: Refined shadow to prevent border artifacts */
+    box-shadow:
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.7),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.3),
+        /* Simulated gradient border */ 0 2px 5px rgba(0, 0, 0, 0.05),
+        0 15px 35px rgba(0, 0, 0, 0.08);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.4s ease,
+        background var(--lg-transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+    color: var(--lg-text-color);
+    will-change: transform, box-shadow;
+}
+
+.lg-dark-theme .lg-material {
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 35, 0.3),
+        rgba(30, 30, 35, 0.2)
+    );
+    box-shadow:
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.1),
+        /* Dark theme gradient border */ 0 2px 5px rgba(0, 0, 0, 0.1),
+        0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Base Material Elements */
+.lg-material::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNzUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==");
+    pointer-events: none;
+    z-index: -1;
+    border-radius: inherit; /* Ensure noise texture respects border radius */
+}
+
+.lg-material p,
+.lg-material h1,
+.lg-material h2,
+.lg-material h3,
+.lg-material h4,
+.lg-material h5,
+.lg-material h6 {
+    z-index: 2;
+    position: relative;
+    color: inherit;
+}
+
+.lg-material::before {
+    content: "";
+    position: absolute;
+    top: var(--lg-pointer-y, 50%);
+    left: var(--lg-pointer-x, 50%);
+    width: var(--lg-glint-size);
+    height: var(--lg-glint-size);
+    background: radial-gradient(
+        circle,
+        var(--lg-glint-color) 0%,
+        transparent 55%
+    );
+    opacity: var(--lg-pointer-active, 0);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%; /* Make glint circular */
+}
+
+/* Nested & Themed Materials */
+.lg-material .lg-material {
+    --lg-border-radius: 22px;
+    background: rgba(var(--lg-tint-rgb), 0.3);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.lg-dark-theme .lg-material .lg-material {
+    background: rgba(var(--lg-tint-rgb), 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Special Effects & States --- */
+/* These filters require the SVG definitions injected by liquidglass.v7.js */
+.lg-lensing {
+    filter: url(#lg-global-lensing-filter);
+}
+
+.lg-ripple-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    filter: url(#lg-ripple-filter);
+    z-index: 0;
+    border-radius: inherit; /* Respect parent's border radius */
+    overflow: hidden; /* Clip ripples to container */
+}
+
+.lg-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    transform: scale(0);
+    animation: lg-ripple-anim 0.7s ease-out;
+    will-change: transform, opacity;
+}
+
+@keyframes lg-ripple-anim {
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.lg-readable-boost {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.lg-dark-theme .lg-readable-boost {
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Interactivity & States --- */
+/* NOTE: For .lg-material to be focusable, add tabindex="0" to the element in your HTML. */
+.lg-material:focus-visible {
+    outline: none;
+    box-shadow:
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.7),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.3),
+        0 2px 5px rgba(0, 0, 0, 0.05),
+        0 15px 35px rgba(0, 0, 0, 0.08),
+        0 0 0 3px var(--lg-background-color-solid),
+        /* Gap */ 0 0 0 5px var(--lg-accent-color); /* Focus Ring */
+}
+
+.lg-dark-theme .lg-material:focus-visible {
+    box-shadow:
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.1),
+        0 2px 5px rgba(0, 0, 0, 0.1),
+        0 15px 35px rgba(0, 0, 0, 0.15),
+        0 0 0 3px var(--lg-background-color-solid),
+        0 0 0 5px var(--lg-accent-color);
+}
+
+.lg-button {
+    padding: 14px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition:
+        transform 0.2s var(--lg-transition-spring),
+        box-shadow 0.2s var(--lg-transition-spring);
+    z-index: 2;
+    position: relative; /* Ensure proper stacking */
+    font-size: inherit; /* Inherit font size from parent */
+    font-family: inherit; /* Inherit font family */
+    background: transparent; /* Remove default button background */
+    color: inherit; /* Inherit text color */
+}
+
+.lg-button:hover {
+    transform: translateY(-3px);
+}
+
+.lg-button:active {
+    transform: scale(0.96);
+    transition-duration: 0.05s;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.lg-dark-theme .lg-button:active {
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Pulsing animation for alerts and success states */
+.lg-alert,
+.lg-success {
+    animation: lg-pulse-border 2s infinite ease-in-out;
+}
+
+.lg-alert {
+    --lg-pulse-color: var(--lg-alert-color);
+    border-color: var(--lg-alert-color);
+}
+
+.lg-success {
+    --lg-pulse-color: var(--lg-success-color);
+    border-color: var(--lg-success-color);
+}
+
+@keyframes lg-pulse-border {
+    0%,
+    100% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--lg-pulse-color);
+    }
+}
+
+/* Accessibility and Performance */
+@media (prefers-reduced-motion: reduce) {
+    .lg-material,
+    .lg-button {
+        transition-duration: 0.2s;
+        transform: none !important;
+        animation: none !important;
+    }
+    .lg-material::before,
+    .lg-ripple,
+    .lg-lensing {
+        display: none !important;
+        filter: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .lg-material {
+        border: 2px solid var(--lg-text-color);
+        background: var(--lg-background-color-solid);
+    }
+
+    .lg-button {
+        border: 1px solid var(--lg-text-color);
+    }
+}
+
+/* --- Demo-specific Styles (for layout) --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 80px auto 0;
+}
+
+.header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--lg-text-color);
+    transition: color 0.6s ease;
+}
+
+.header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Responsive font size */
+    margin: 0; /* Reset default margin */
+}
+
+.header p {
+    font-size: clamp(1rem, 2.5vw, 1.2rem); /* Responsive font size */
+    opacity: 0.8;
+    margin: 1rem 0; /* Add some margin */
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+.lg-panel {
+    padding: var(--lg-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 320px;
+}
+
+.gallery-item {
+    text-align: center;
+}
+
+.gallery-item h2 {
+    margin-bottom: 10px;
+    margin-top: 0; /* Reset default margin */
+}
+
+.gallery-item p {
+    font-size: 1rem;
+    opacity: 0.7;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.gallery-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    object-fit: cover; /* Ensure proper image scaling */
+}
+
+.nested-panel {
+    padding: var(--lg-padding);
+    text-align: center;
+    margin-top: 20px;
+}

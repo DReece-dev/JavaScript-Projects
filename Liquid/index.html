@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LiquidGlass.js v7.0 - The Aesthetic Core</title>
+        <!-- Link to the external CSS file -->
+        <link rel="stylesheet" href="liquidglass_v3_pre.css" />
+    </head>
+    <body>
+        <header class="header">
+            <h1>Liquid Glass v7</h1>
+            <p>
+                The Aesthetic Core. A pure realization of a digital
+                meta-material that is translucent, adaptive, and fluid. Move
+                your mouse to see the light shift.
+            </p>
+            <div class="controls">
+                <button
+                    class="lg-material lg-button"
+                    onclick="liquidGlass.setTheme('light')"
+                >
+                    Light Mode
+                </button>
+                <button
+                    class="lg-material lg-button"
+                    onclick="liquidGlass.setTheme('dark')"
+                >
+                    Dark Mode
+                </button>
+            </div>
+        </header>
+
+        <div class="grid">
+            <div class="lg-material lg-panel lg-lensing gallery-item">
+                <h2>Lensing & Layered Depth</h2>
+                <p>
+                    "UI components appear as floating, rounded forms that nest
+                    neatly and bend light, providing separation without heavy
+                    shadows."
+                </p>
+                <div class="lg-material nested-panel">
+                    <p style="margin: 0">A second layer of glass</p>
+                </div>
+            </div>
+
+            <div
+                class="lg-material lg-panel gallery-item"
+                data-lg-autotint-from="#tint-source-image"
+            >
+                <img
+                    id="tint-source-image"
+                    src="https://images.unsplash.com/photo-1507525428034-b723a9ce6890?q=80&w=400"
+                    alt="Beach photo"
+                />
+                <h2>Context-Aware Color</h2>
+                <p>
+                    "The interface subtly adapts to your screen content, drawing
+                    from app colors." This panel's tint is derived from the
+                    image above.
+                </p>
+            </div>
+
+            <div class="lg-material lg-panel gallery-item">
+                <h2>Fluidity & Organic Motion</h2>
+                <p>
+                    "The interface is designed to feel like a lightweight
+                    liquid, responding with 'gel-like flexibility' and smooth,
+                    morphing animations."
+                </p>
+                <div class="controls">
+                    <button class="lg-material lg-button">Press Me</button>
+                </div>
+            </div>
+
+            <div class="lg-material lg-panel gallery-item">
+                <h2>Dynamic Adaptivity</h2>
+                <p>
+                    "The material adapts to ensure legibility." This text is on
+                    a complex part of the background, so a subtle text-shadow
+                    has been automatically applied by the engine.
+                </p>
+            </div>
+        </div>
+
+        <!-- The required JavaScript file -->
+        <script src="liquidglass.js"></script>
+    </body>
+</html>
