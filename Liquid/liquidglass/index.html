@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Liquid Glass UI</title>
+        <link rel="stylesheet" href="liquidglass.css" />
+    </head>
+    <body>
+        <!-- Glass Navigation -->
+        <nav class="glass-nav">
+            <a href="#home" class="glass-nav-item active">Home</a>
+            <a href="#components" class="glass-nav-item">Components</a>
+            <a href="#effects" class="glass-nav-item">Effects</a>
+            <a href="#about" class="glass-nav-item">About</a>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="container">
+            <section class="section">
+                <div
+                    class="liquid-glass glass-iridescent"
+                    style="
+                        padding: 60px;
+                        text-align: center;
+                        margin-bottom: 40px;
+                    "
+                >
+                    <h1 class="section-title" style="margin-bottom: 20px">
+                        Liquid Glass UI
+                    </h1>
+                    <p
+                        style="
+                            font-size: 1.2em;
+                            opacity: 0.9;
+                            max-width: 600px;
+                            margin: 0 auto;
+                        "
+                    >
+                        Experience the future of interface design with dynamic,
+                        light-bending digital materials
+                    </p>
+                </div>
+            </section>
+
+            <!-- Form Components -->
+            <section class="section">
+                <h2 class="section-title">Form Components</h2>
+
+                <div class="demo-grid">
+                    <!-- Input Fields -->
+                    <div class="liquid-glass" style="padding: 30px">
+                        <h3 style="margin-bottom: 20px">Input Fields</h3>
+                        <input
+                            type="text"
+                            class="glass-input"
+                            placeholder="Enter your name"
+                            style="margin-bottom: 15px"
+                        />
+                        <input
+                            type="email"
+                            class="glass-input"
+                            placeholder="Email address"
+                            style="margin-bottom: 15px"
+                        />
+                        <textarea
+                            class="glass-input"
+                            placeholder="Your message"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="liquid-glass" style="padding: 30px">
+                        <h3 style="margin-bottom: 20px">Buttons</h3>
+                        <button class="glass-button">Primary</button>
+                        <button
+                            class="glass-button"
+                            style="background: rgba(120, 255, 180, 0.2)"
+                        >
+                            Success
+                        </button>
+                        <button
+                            class="glass-button"
+                            style="background: rgba(255, 120, 120, 0.2)"
+                        >
+                            Danger
+                        </button>
+                    </div>
+
+                    <!-- Toggle & Slider -->
+                    <div class="liquid-glass" style="padding: 30px">
+                        <h3 style="margin-bottom: 20px">Controls</h3>
+
+                        <!-- Toggle Switch -->
+                        <div style="margin-bottom: 30px">
+                            <label class="glass-toggle">
+                                <input
+                                    type="checkbox"
+                                    class="glass-toggle-input"
+                                />
+                                <span class="glass-toggle-slider"></span>
+                            </label>
+                            <span style="margin-left: 15px"
+                                >Enable notifications</span
+                            >
+                        </div>
+
+                        <!-- Slider -->
+                        <div class="glass-slider-container">
+                            <input
+                                type="range"
+                                class="glass-slider"
+                                min="0"
+                                max="100"
+                                value="60"
+                            />
+                        </div>
+                        <p style="text-align: center; margin-top: 10px">
+                            Volume: <span id="sliderValue">60</span>%
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Components -->
+            <section class="section">
+                <h2 class="section-title">Interactive Components</h2>
+
+                <!-- Tabs -->
+                <div
+                    class="liquid-glass"
+                    style="padding: 30px; margin-bottom: 30px"
+                >
+                    <div class="glass-tabs">
+                        <button
+                            class="glass-tab active"
+                            onclick="switchTab(event, 'tab1')"
+                        >
+                            Overview
+                        </button>
+                        <button
+                            class="glass-tab"
+                            onclick="switchTab(event, 'tab2')"
+                        >
+                            Features
+                        </button>
+                        <button
+                            class="glass-tab"
+                            onclick="switchTab(event, 'tab3')"
+                        >
+                            Settings
+                        </button>
+                    </div>
+
+                    <div id="tab1" class="tab-content" style="padding: 20px">
+                        <h3>Overview</h3>
+                        <p>
+                            Welcome to the Liquid Glass UI system. This design
+                            language emphasizes fluidity and light.
+                        </p>
+                    </div>
+
+                    <div
+                        id="tab2"
+                        class="tab-content"
+                        style="display: none; padding: 20px"
+                    >
+                        <h3>Features</h3>
+                        <p>
+                            Dynamic refraction, real-time rendering, and
+                            context-aware adaptability.
+                        </p>
+                    </div>
+
+                    <div
+                        id="tab3"
+                        class="tab-content"
+                        style="display: none; padding: 20px"
+                    >
+                        <h3>Settings</h3>
+                        <p>
+                            Customize your experience with various glass effects
+                            and transparency levels.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Accordion -->
+                <div class="glass-accordion">
+                    <div class="glass-accordion-item">
+                        <div
+                            class="glass-accordion-header"
+                            onclick="toggleAccordion(this)"
+                        >
+                            <span>What is Liquid Glass?</span>
+                            <span class="glass-accordion-icon">▼</span>
+                        </div>
+                        <div class="glass-accordion-content">
+                            <p>
+                                Liquid Glass is a digital meta-material that
+                                dynamically bends and shapes light, creating
+                                unique visual experiences.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="glass-accordion-item">
+                        <div
+                            class="glass-accordion-header"
+                            onclick="toggleAccordion(this)"
+                        >
+                            <span>How does it work?</span>
+                            <span class="glass-accordion-icon">▼</span>
+                        </div>
+                        <div class="glass-accordion-content">
+                            <p>
+                                Using advanced CSS properties like
+                                backdrop-filter and real-time calculations, we
+                                create materials that respond to their
+                                environment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Feedback Components -->
+            <section class="section">
+                <h2 class="section-title">Feedback & Status</h2>
+
+                <div class="demo-grid">
+                    <!-- Alerts -->
+                    <div>
+                        <div class="glass-alert glass-alert-info">
+                            <strong>Info:</strong> System update available
+                        </div>
+                        <div class="glass-alert glass-alert-success">
+                            <strong>Success:</strong> Changes saved
+                        </div>
+                        <div class="glass-alert glass-alert-warning">
+                            <strong>Warning:</strong> Low battery
+                        </div>
+                    </div>
+
+                    <!-- Progress & Loading -->
+                    <div class="liquid-glass" style="padding: 30px">
+                        <h3 style="margin-bottom: 20px">Progress</h3>
+                        <div class="glass-progress">
+                            <div
+                                class="glass-progress-bar"
+                                style="width: 75%"
+                            ></div>
+                        </div>
+
+                        <div class="glass-spinner" style="margin-top: 30px">
+                            <div class="glass-spinner-ring"></div>
+                            <div class="glass-spinner-ring"></div>
+                            <div class="glass-spinner-ring"></div>
+                        </div>
+                    </div>
+
+                    <!-- Badges & Chips -->
+                    <div class="liquid-glass" style="padding: 30px">
+                        <h3 style="margin-bottom: 20px">Tags & Labels</h3>
+                        <div style="margin-bottom: 15px">
+                            <span class="glass-badge">Default</span>
+                            <span class="glass-badge glass-badge-primary"
+                                >Primary</span
+                            >
+                            <span class="glass-badge glass-badge-success"
+                                >Success</span
+                            >
+                        </div>
+
+                        <div>
+                            <span class="glass-chip">
+                                React
+                                <span class="glass-chip-close">×</span>
+                            </span>
+                            <span class="glass-chip">
+                                Vue.js
+                                <span class="glass-chip-close">×</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Special Effects -->
+            <section class="section">
+                <h2 class="section-title">Special Effects</h2>
+
+                <div class="demo-grid">
+                    <!-- Morphing Shape -->
+                    <div
+                        class="liquid-glass glass-morph"
+                        style="padding: 40px; text-align: center"
+                    >
+                        <h3>Morphing Glass</h3>
+                        <p>Organic, fluid shapes</p>
+                    </div>
+
+                    <!-- Holographic -->
+                    <div
+                        class="liquid-glass glass-holographic"
+                        style="padding: 40px; text-align: center"
+                    >
+                        <h3>Holographic</h3>
+                        <p>Shifting rainbow effect</p>
+                    </div>
+
+                    <!-- Chromatic Text -->
+                    <div
+                        class="liquid-glass"
+                        style="padding: 40px; text-align: center"
+                    >
+                        <h3 class="glass-chromatic" data-text="Chromatic">
+                            Chromatic
+                        </h3>
+                        <p>Light dispersion effect</p>
+                    </div>
+
+                    <!-- Prismatic -->
+                    <div
+                        class="liquid-glass glass-prismatic"
+                        style="padding: 40px; text-align: center"
+                    >
+                        <h3>Prismatic Light</h3>
+                        <p>Rotating color spectrum</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cards Grid -->
+            <section class="section">
+                <h2 class="section-title">Card Layouts</h2>
+
+                <div class="glass-grid">
+                    <div class="glass-grid-item">
+                        <div class="glass-avatar" style="margin-bottom: 20px">
+                            <div
+                                style="
+                                    width: 100%;
+                                    height: 100%;
+                                    background: linear-gradient(
+                                        135deg,
+                                        #667eea,
+                                        #764ba2
+                                    );
+                                "
+                            ></div>
+                        </div>
+                        <h3>Dynamic Rendering</h3>
+                        <p>
+                            Real-time calculations ensure smooth performance
+                            across all devices.
+                        </p>
+                    </div>
+
+                    <div class="glass-grid-item">
+                        <div class="glass-avatar" style="margin-bottom: 20px">
+                            <div
+                                style="
+                                    width: 100%;
+                                    height: 100%;
+                                    background: linear-gradient(
+                                        135deg,
+                                        #f093fb,
+                                        #f5576c
+                                    );
+                                "
+                            ></div>
+                        </div>
+                        <h3>Adaptive Colors</h3>
+                        <p>
+                            Automatically adjusts to your content and system
+                            preferences.
+                        </p>
+                    </div>
+
+                    <div class="glass-grid-item">
+                        <div class="glass-avatar" style="margin-bottom: 20px">
+                            <div
+                                style="
+                                    width: 100%;
+                                    height: 100%;
+                                    background: linear-gradient(
+                                        135deg,
+                                        #4facfe,
+                                        #00f2fe
+                                    );
+                                "
+                            ></div>
+                        </div>
+                        <h3>Layered Depth</h3>
+                        <p>
+                            Multiple glass layers create genuine
+                            three-dimensional effects.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Modal -->
+        <div class="glass-modal-overlay" id="modal">
+            <div class="glass-modal">
+                <h2 style="margin-bottom: 20px">Glass Modal</h2>
+                <p style="margin-bottom: 30px">
+                    This modal demonstrates the intense blur effect and smooth
+                    animations of the Liquid Glass system.
+                </p>
+                <button class="glass-button" onclick="closeModal()">
+                    Close Modal
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button class="glass-fab" onclick="openModal()">
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </button>
+
+        <!-- Tooltips -->
+        <div style="position: fixed; bottom: 20px; left: 20px">
+            <div class="glass-tooltip">
+                <button class="glass-button">Hover me</button>
+                <span class="glass-tooltip-content"
+                    >This is a glass tooltip!</span
+                >
+            </div>
+        </div>
+
+        <!-- Dropdown Example -->
+        <div style="position: fixed; bottom: 20px; right: 120px">
+            <div class="glass-dropdown" id="dropdown">
+                <button
+                    class="glass-dropdown-toggle"
+                    onclick="toggleDropdown()"
+                >
+                    Options ▼
+                </button>
+                <div class="glass-dropdown-menu">
+                    <div class="glass-dropdown-item">Profile</div>
+                    <div class="glass-dropdown-item">Settings</div>
+                    <div class="glass-dropdown-item">Logout</div>
+                </div>
+            </div>
+        </div>
+
+        <script src="liquidglass.js"></script>
+
+        <!-- Additional initialization if needed -->
+        <script>
+            // Custom event listeners
+            document.addEventListener("DOMContentLoaded", () => {
+                // Example: Listen for dropdown selection
+                const dropdown = document.getElementById("dropdown");
+                if (dropdown) {
+                    dropdown.addEventListener("itemSelected", (e) => {
+                        console.log("Selected:", e.detail.value);
+                    });
+                }
+
+                // Example: Programmatically open modal
+                document
+                    .getElementById("openModalBtn")
+                    ?.addEventListener("click", () => {
+                        liquidGlass.openModal("main-modal");
+                    });
+
+                // Example: Configure settings
+                liquidGlass.setConfig("performanceMode", "balanced");
+
+                // Example: Custom animations
+                document.querySelectorAll(".custom-reveal").forEach((el) => {
+                    liquidGlass.animateIn(el, 600);
+                });
+            });
+        </script>
+    </body>
+</html>
